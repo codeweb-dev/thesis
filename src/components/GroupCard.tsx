@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, MotionValue, useTransform, useInView } from "framer-motion";
+import { motion, MotionValue, useTransform, useInView, motionValue } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,7 +23,7 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
   const isActive = useInView(ref, { margin: "-30% 0px -30% 0px" });
 
   // Faster parallax for foreground decorations
-  const decorationY = useTransform(scrollYProgress || new motion.MotionValue(), [0, 1], ["0%", "-200%"]);
+  const decorationY = useTransform(scrollYProgress || motionValue(0), [0, 1], ["0%", "-200%"]);
 
   return (
     <motion.div

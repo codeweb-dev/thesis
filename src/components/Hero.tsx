@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, MotionValue, useTransform } from "framer-motion";
+import { motion, MotionValue, useTransform, motionValue } from "framer-motion";
 import { Compass, MapPin } from "lucide-react";
 
 interface HeroProps {
@@ -9,8 +9,8 @@ interface HeroProps {
 
 export function Hero({ scrollYProgress }: HeroProps) {
   // If scrollYProgress isn't provided (e.g. testing in isolation), fallback to 0 movement.
-  const yFast = useTransform(scrollYProgress || new motion.MotionValue(), [0, 1], ["0%", "150%"]);
-  const ySlow = useTransform(scrollYProgress || new motion.MotionValue(), [0, 1], ["0%", "50%"]);
+  const yFast = useTransform(scrollYProgress || motionValue(0), [0, 1], ["0%", "150%"]);
+  const ySlow = useTransform(scrollYProgress || motionValue(0), [0, 1], ["0%", "50%"]);
 
   return (
     <section className="relative w-full py-32 flex flex-col items-center justify-center text-center overflow-hidden">
