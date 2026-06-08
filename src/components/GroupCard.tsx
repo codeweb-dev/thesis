@@ -14,7 +14,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { MapPin, Flag, BadgeCheck } from "lucide-react";
+import { MapPin, Flag, BadgeCheck, Crown, Layout, Database, Palette, Users, Code, CheckCircle2 } from "lucide-react";
 import { ElementType, useRef } from "react";
 
 interface GroupCardProps {
@@ -134,32 +134,58 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
 
                 {leader && (
                   <div>
-                    <h4 className="text-lg font-bold mb-2 text-foreground">Leader</h4>
-                    <p className="text-muted-foreground">{leader}</p>
+                    <h4 className="text-lg font-bold mb-3 text-foreground flex items-center gap-2">
+                      <Crown className="w-5 h-5 text-yellow-500" />
+                      Leader
+                    </h4>
+                    <div className="bg-foreground/5 p-3 rounded-lg border border-foreground/10 inline-flex items-center gap-3">
+                      <span className="font-semibold text-foreground text-base">{leader}</span>
+                    </div>
                   </div>
                 )}
 
                 {roles && (
                   <div>
-                    <h4 className="text-lg font-bold mb-2 text-foreground">Roles</h4>
-                    <ul className="list-disc pl-5 text-muted-foreground space-y-1">
-                      {Object.entries(roles).map(([role, person]) => (
-                        <li key={role}>
-                          <span className="font-medium text-foreground">{role}:</span> {person}
-                        </li>
-                      ))}
-                    </ul>
+                    <h4 className="text-lg font-bold mb-3 text-foreground flex items-center gap-2">
+                      <Users className="w-5 h-5 text-blue-500" />
+                      Roles
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-muted-foreground">
+                      {Object.entries(roles).map(([role, person]) => {
+                        let RoleIcon = Code;
+                        if (role.toLowerCase().includes("frontend")) RoleIcon = Layout;
+                        if (role.toLowerCase().includes("backend")) RoleIcon = Database;
+                        if (role.toLowerCase().includes("designer")) RoleIcon = Palette;
+                        
+                        return (
+                          <div key={role} className="flex items-center gap-3 bg-foreground/5 hover:bg-foreground/10 transition-colors p-3 rounded-lg border border-foreground/10">
+                            <div className="p-2 bg-background rounded-md shadow-sm border border-foreground/10">
+                              <RoleIcon className="w-4 h-4 text-foreground/70" />
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-foreground/50">{role}</span>
+                              <span className="font-medium text-foreground leading-tight">{person}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
 
                 {members && members.length > 0 && (
                   <div>
-                    <h4 className="text-lg font-bold mb-2 text-foreground">Members</h4>
-                    <ul className="list-disc pl-5 text-muted-foreground space-y-1">
+                    <h4 className="text-lg font-bold mb-3 text-foreground flex items-center gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-500" />
+                      Members
+                    </h4>
+                    <div className="flex flex-wrap gap-2 text-muted-foreground">
                       {members.map((member, i) => (
-                        <li key={i}>{member}</li>
+                        <div key={i} className="flex items-center bg-background border border-foreground/20 px-4 py-2 rounded-full text-sm font-medium shadow-sm hover:border-foreground/40 transition-colors">
+                          {member}
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 )}
 
