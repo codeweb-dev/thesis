@@ -44,7 +44,7 @@ interface GroupCardProps {
 export function GroupCard({ id, title, description, icon: Icon, index, color, scrollYProgress, fullDescription, leader, members, roles, images, landingImage }: GroupCardProps) {
   const isEven = index % 2 === 0;
   const ref = useRef<HTMLDivElement>(null);
-  const isActive = useInView(ref, { margin: "-30% 0px -30% 0px" });
+  const isActive = useInView(ref, { margin: "-45% 0px -45% 0px" });
 
   // Faster parallax for foreground decorations
   const decorationY = useTransform(scrollYProgress || motionValue(0), [0, 1], ["0%", "-200%"]);
