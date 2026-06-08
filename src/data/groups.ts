@@ -54,7 +54,10 @@ The study is grounded on the Technology Acceptance Model (TAM), Systems Theory, 
     members: [
       "Kurt Rom"
     ],
-    images: [],
+    images: [
+      "/pictures/g2/p1.jpg",
+      "/pictures/g2/p2.jpg",
+    ],
     landingImage: "/pictures/g2/landing.jpg",
   },
   {
@@ -63,7 +66,7 @@ The study is grounded on the Technology Acceptance Model (TAM), Systems Theory, 
     description: "A Web-Based Resource Allocation and Scheduling System for Municipal Facilities",
     icon: CalendarDays,
     color: "#B3FFC6", // Light Green
-    fullDescription: "Group 3 hasn't provided the description.",
+    fullDescription: "The GMA Municipal Digital Services is a centralized platform that provides accessible municipal services, information, and communication for residents and local government personnel.",
     leader: "Augusto Villanueva",
     roles: {
       Frontend: "John Clark Abordo",
@@ -97,7 +100,10 @@ The study is grounded on the Technology Acceptance Model (TAM), Systems Theory, 
       "John Robert Maceda",
       "Christian Gierran"
     ],
-    images: [],
+    images: [
+      "/pictures/g4/p1.jpg",
+      "/pictures/g4/p2.jpg",
+    ],
     landingImage: "/pictures/g4/landing.jpg",
   },
   {
@@ -131,7 +137,7 @@ The study is grounded on the Technology Acceptance Model (TAM), Systems Theory, 
     description: "Mobile App for Thesis Guidance and Monitoring",
     icon: BookOpen,
     color: "#F8BBD0", // Light Pink
-    fullDescription: "Group 6 hasn't provided the description yet.",
+    fullDescription: "ThesisHUB provides EARIST Cavite with document manager, AI tools such as grammar checker, templates and guides  based on EARIST's Official Thesis Guide in one application for thesis document making.",
     leader: "Louie John Adarle",
     roles: {
       Frontend: "Rhon Niel Dag-uman",
@@ -143,7 +149,10 @@ The study is grounded on the Technology Acceptance Model (TAM), Systems Theory, 
       "Ginerose Manes",
       "Shaira Nicole Fennis"
     ],
-    images: [],
+    images: [
+      "/pictures/g6/p1.jpg",
+      "/pictures/g6/p2.jpg",
+    ],
     landingImage: "/pictures/g6/landing.jpg",
   },
   {
@@ -163,7 +172,10 @@ The study is grounded on the Technology Acceptance Model (TAM), Systems Theory, 
       "Judy Ann Subico",
       "John Bernard Miranda"
     ],
-    images: [],
+    images: [
+      "/pictures/g7/p1.jpg",
+      "/pictures/g7/p2.jpg",
+    ],
     landingImage: "/pictures/g7/landing.png",
   },
   {
