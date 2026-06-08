@@ -14,7 +14,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { MapPin, Flag, BadgeCheck, Crown, Layout, Database, Palette, Users, Code, CheckCircle2 } from "lucide-react";
+import { MapPin, Flag, BadgeCheck, Crown, Layout, Database, Palette, Users, Code, CheckCircle2, FileText, Images } from "lucide-react";
 import { ElementType, useRef, useState, useEffect } from "react";
 import {
   Carousel,
@@ -216,7 +216,10 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
 
                 {fullDescription && (
                   <div>
-                    <h4 className="text-lg font-bold mb-2 text-foreground">Project Description</h4>
+                    <h4 className="text-lg font-bold mb-3 text-foreground flex items-center gap-2">
+                      <FileText className="w-5 h-5 text-purple-500" />
+                      Project Description
+                    </h4>
                     <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
                       {fullDescription.split("\n").map((para, i) => (
                         <p key={i}>{para}</p>
@@ -227,7 +230,10 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
 
                 {images && images.length > 0 && (
                   <div>
-                    <h4 className="text-lg font-bold mb-2 text-foreground">Gallery</h4>
+                    <h4 className="text-lg font-bold mb-3 text-foreground flex items-center gap-2">
+                      <Images className="w-5 h-5 text-pink-500" />
+                      Gallery
+                    </h4>
                     <div className="px-12">
                       <Carousel
                         setApi={setApi}
