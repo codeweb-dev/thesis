@@ -4,6 +4,16 @@ import { motion, MotionValue, useTransform, useInView, motionValue } from "frame
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { MapPin, Flag } from "lucide-react";
 import { ElementType, useRef } from "react";
 
@@ -15,9 +25,15 @@ interface GroupCardProps {
   index: number;
   color: string;
   scrollYProgress?: MotionValue<number>;
+  fullDescription?: string;
+  leader?: string;
+  members?: string[];
+  roles?: Record<string, string>;
+  images?: string[];
+  landingImage?: string;
 }
 
-export function GroupCard({ id, title, description, icon: Icon, index, color, scrollYProgress }: GroupCardProps) {
+export function GroupCard({ id, title, description, icon: Icon, index, color, scrollYProgress, fullDescription, leader, members, roles, images, landingImage }: GroupCardProps) {
   const isEven = index % 2 === 0;
   const ref = useRef<HTMLDivElement>(null);
   const isActive = useInView(ref, { margin: "-30% 0px -30% 0px" });
@@ -39,7 +55,7 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
         {/* Connector line */}
         <div className={`absolute w-full h-0.5 border-t-2 transition-all duration-500 ${isActive ? "border-solid border-foreground" : "border-dashed border-foreground/30"}`} />
         {/* Marker */}
-        <div 
+        <div
           className={`absolute ${isEven ? "right-0 translate-x-1/2" : "left-0 -translate-x-1/2"} w-12 h-12 rounded-full border-2 border-foreground flex items-center justify-center z-10 transition-all duration-500 ${isActive ? "scale-110" : "bg-background scale-100"}`}
           style={{ backgroundColor: isActive ? color : undefined }}
         >
@@ -49,7 +65,7 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
 
       {/* Route Marker for Mobile */}
       <div className="md:hidden absolute top-1/2 -translate-y-1/2 left-8 -translate-x-1/2 z-10">
-        <div 
+        <div
           className={`w-6 h-6 rounded-full border-2 border-foreground flex items-center justify-center transition-all duration-500 ${isActive ? "scale-110" : "bg-background scale-100"}`}
           style={{ backgroundColor: isActive ? color : undefined }}
         >
@@ -61,20 +77,20 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
 
 
 
-      <Card 
+      <Card
         className={`rounded-xl border-2 border-foreground shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:shadow-[6px_6px_0_0_rgba(0,0,0,1)] transition-all duration-500 overflow-hidden group ${isActive ? "scale-[1.02]" : "bg-background"}`}
         style={{ backgroundColor: isActive ? color : undefined }}
       >
         <CardHeader className="pb-4">
           <div className="flex justify-between items-start mb-2">
-            <Badge 
-              variant="outline" 
+            <Badge
+              variant="outline"
               className={`border-foreground/50 font-semibold px-3 py-1 transition-colors duration-500 text-foreground`}
               style={{ backgroundColor: isActive ? color : undefined }}
             >
               Group {id}
             </Badge>
-            <div 
+            <div
               className={`p-2 rounded-full border-2 border-foreground transition-all duration-500 text-foreground group-hover:bg-foreground group-hover:text-background ${!isActive && "bg-background"}`}
               style={{ backgroundColor: isActive ? color : undefined }}
             >
@@ -88,6 +104,93 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
             {description}
           </CardDescription>
         </CardContent>
+        <CardFooter className="pt-4 border-t border-foreground/10 bg-muted/20">
+          <Drawer direction="right">
+            <DrawerTrigger asChild>
+              <Button variant="outline" className="w-full border-2 border-foreground hover:bg-foreground hover:text-background transition-all">
+                View Details
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent className="w-full sm:max-w-none md:w-1/2">
+              <DrawerHeader>
+                <DrawerTitle className="text-2xl">{title} Details</DrawerTitle>
+                <DrawerDescription>Team and Project Information</DrawerDescription>
+              </DrawerHeader>
+              <div className="overflow-y-auto px-4 py-2 flex flex-col gap-6">
+                {landingImage ? (
+                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-foreground/10 shadow-sm aspect-video mb-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={landingImage} alt={`${title} landing page`} className="object-cover w-full h-full" />
+                  </div>
+                ) : (
+                  <div className="p-4 bg-red-500/10 text-red-500 rounded-lg border border-red-500/20 text-sm">
+                    Debug: landingImage prop is undefined!
+                  </div>
+                )}
+                {images && images.length > 0 && (
+                  <div>
+                    <h4 className="text-lg font-bold mb-2 text-foreground">Gallery</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {images.map((img, i) => (
+                        <div key={i} className="relative aspect-video rounded-lg overflow-hidden border border-foreground/10">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={img} alt={`${title} screenshot ${i + 1}`} className="object-cover w-full h-full" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {fullDescription && (
+                  <div>
+                    <h4 className="text-lg font-bold mb-2 text-foreground">Project Description</h4>
+                    <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
+                      {fullDescription.split("\n").map((para, i) => (
+                        <p key={i}>{para}</p>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {leader && (
+                  <div>
+                    <h4 className="text-lg font-bold mb-2 text-foreground">Leader</h4>
+                    <p className="text-muted-foreground">{leader}</p>
+                  </div>
+                )}
+
+                {roles && (
+                  <div>
+                    <h4 className="text-lg font-bold mb-2 text-foreground">Roles</h4>
+                    <ul className="list-disc pl-5 text-muted-foreground space-y-1">
+                      {Object.entries(roles).map(([role, person]) => (
+                        <li key={role}>
+                          <span className="font-medium text-foreground">{role}:</span> {person}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {members && members.length > 0 && (
+                  <div>
+                    <h4 className="text-lg font-bold mb-2 text-foreground">Members</h4>
+                    <ul className="list-disc pl-5 text-muted-foreground space-y-1">
+                      {members.map((member, i) => (
+                        <li key={i}>{member}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <DrawerFooter>
+                <DrawerClose asChild>
+                  <Button variant="outline" className="border-2 border-foreground hover:bg-foreground hover:text-background">Close</Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+        </CardFooter>
       </Card>
     </motion.div>
   );

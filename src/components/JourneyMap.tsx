@@ -49,12 +49,8 @@ export function JourneyMap({ scrollYProgress }: JourneyMapProps) {
         {groups.map((group, index) => (
           <GroupCard
             key={group.id}
-            id={group.id}
-            title={group.title}
-            description={group.description}
-            icon={group.icon}
+            {...group}
             index={index}
-            color={group.color}
             scrollYProgress={scrollYProgress}
           />
         ))}
