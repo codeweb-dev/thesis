@@ -15,7 +15,15 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { MapPin, Flag, BadgeCheck, Crown, Layout, Database, Palette, Users, Code, CheckCircle2 } from "lucide-react";
-import { ElementType, useRef } from "react";
+import { ElementType, useRef, useState, useEffect } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 interface GroupCardProps {
   id: number;
@@ -40,6 +48,23 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
 
   // Faster parallax for foreground decorations
   const decorationY = useTransform(scrollYProgress || motionValue(0), [0, 1], ["0%", "-200%"]);
+
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
 
   return (
     <motion.div
@@ -203,13 +228,32 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
                 {images && images.length > 0 && (
                   <div>
                     <h4 className="text-lg font-bold mb-2 text-foreground">Gallery</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {images.map((img, i) => (
-                        <div key={i} className="relative aspect-video rounded-lg overflow-hidden border border-foreground/10">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={img} alt={`${title} screenshot ${i + 1}`} className="object-cover w-full h-full" />
-                        </div>
-                      ))}
+                    <div className="px-12">
+                      <Carousel
+                        setApi={setApi}
+                        opts={{
+                          align: "start",
+                        }}
+                        className="w-full"
+                      >
+                        <CarouselContent>
+                          {images.map((img, i) => (
+                            <CarouselItem key={i}>
+                              <div className="p-1">
+                                <div className="relative aspect-video rounded-lg overflow-hidden border border-foreground/10">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img src={img} alt={`${title} screenshot ${i + 1}`} className="object-cover w-full h-full" />
+                                </div>
+                              </div>
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        <CarouselPrevious />
+                        <CarouselNext />
+                      </Carousel>
+                      <div className="py-2 text-center text-sm text-muted-foreground">
+                        Slide {current} of {count}
+                      </div>
                     </div>
                   </div>
                 )}
