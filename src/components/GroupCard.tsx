@@ -14,7 +14,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { MapPin, Flag } from "lucide-react";
+import { MapPin, Flag, BadgeCheck } from "lucide-react";
 import { ElementType, useRef } from "react";
 
 interface GroupCardProps {
@@ -75,21 +75,29 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
         <div className={`absolute top-1/2 left-full w-9 h-0.5 border-t-2 -translate-y-1/2 transition-all duration-500 ${isActive ? "border-solid border-foreground" : "border-dashed border-foreground/30"}`} />
       </div>
 
-
-
       <Card
         className={`rounded-xl border-2 border-foreground shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:shadow-[6px_6px_0_0_rgba(0,0,0,1)] transition-all duration-500 overflow-hidden group ${isActive ? "scale-[1.02]" : "bg-background"}`}
         style={{ backgroundColor: isActive ? color : undefined }}
       >
         <CardHeader className="pb-4">
           <div className="flex justify-between items-start mb-2">
-            <Badge
-              variant="outline"
-              className={`border-foreground/50 font-semibold px-3 py-1 transition-colors duration-500 text-foreground`}
-              style={{ backgroundColor: isActive ? color : undefined }}
-            >
-              Group {id}
-            </Badge>
+            <div className="flex items-center gap-3">
+              <Badge
+                variant="outline"
+                className={`border-foreground/50 font-semibold px-3 py-1 transition-colors duration-500 text-foreground`}
+                style={{ backgroundColor: isActive ? color : undefined }}
+              >
+                Group {id}
+              </Badge>
+              <Badge
+                variant="outline"
+                className={`border-foreground/50 font-semibold px-3 py-1 transition-colors duration-500 text-foreground`}
+                style={{ backgroundColor: isActive ? color : undefined }}
+              >
+                <BadgeCheck data-icon="inline-start" />
+                Title Defended
+              </Badge>
+            </div>
             <div
               className={`p-2 rounded-full border-2 border-foreground transition-all duration-500 text-foreground group-hover:bg-foreground group-hover:text-background ${!isActive && "bg-background"}`}
               style={{ backgroundColor: isActive ? color : undefined }}
@@ -117,38 +125,10 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
                 <DrawerDescription>Team and Project Information</DrawerDescription>
               </DrawerHeader>
               <div className="overflow-y-auto px-4 py-2 flex flex-col gap-6">
-                {landingImage ? (
-                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-foreground/10 shadow-sm aspect-video mb-2">
+                {landingImage && (
+                  <div className="relative w-full rounded-xl border-2 border-foreground/10 shadow-sm aspect-video">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={landingImage} alt={`${title} landing page`} className="object-cover w-full h-full" />
-                  </div>
-                ) : (
-                  <div className="p-4 bg-red-500/10 text-red-500 rounded-lg border border-red-500/20 text-sm">
-                    Debug: landingImage prop is undefined!
-                  </div>
-                )}
-                {images && images.length > 0 && (
-                  <div>
-                    <h4 className="text-lg font-bold mb-2 text-foreground">Gallery</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {images.map((img, i) => (
-                        <div key={i} className="relative aspect-video rounded-lg overflow-hidden border border-foreground/10">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={img} alt={`${title} screenshot ${i + 1}`} className="object-cover w-full h-full" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {fullDescription && (
-                  <div>
-                    <h4 className="text-lg font-bold mb-2 text-foreground">Project Description</h4>
-                    <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
-                      {fullDescription.split("\n").map((para, i) => (
-                        <p key={i}>{para}</p>
-                      ))}
-                    </div>
                   </div>
                 )}
 
@@ -180,6 +160,31 @@ export function GroupCard({ id, title, description, icon: Icon, index, color, sc
                         <li key={i}>{member}</li>
                       ))}
                     </ul>
+                  </div>
+                )}
+
+                {fullDescription && (
+                  <div>
+                    <h4 className="text-lg font-bold mb-2 text-foreground">Project Description</h4>
+                    <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
+                      {fullDescription.split("\n").map((para, i) => (
+                        <p key={i}>{para}</p>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {images && images.length > 0 && (
+                  <div>
+                    <h4 className="text-lg font-bold mb-2 text-foreground">Gallery</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {images.map((img, i) => (
+                        <div key={i} className="relative aspect-video rounded-lg overflow-hidden border border-foreground/10">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={img} alt={`${title} screenshot ${i + 1}`} className="object-cover w-full h-full" />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
