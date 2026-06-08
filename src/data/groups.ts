@@ -201,5 +201,6 @@ The study is grounded on the Technology Acceptance Model (TAM), Systems Theory, 
       "/pictures/g8/p2.jpg",
       "/pictures/g8/p3.jpg",
     ],
+    landingImage: "/pictures/g8/landing.jpg",
   },
 ];
